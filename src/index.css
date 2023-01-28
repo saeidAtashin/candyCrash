@@ -8,10 +8,12 @@
   height: 560px;
   display: flex;
   flex-wrap: wrap;
+  gap: 2px 8px;
+  /* row-gap: 2px; */
 }
 
 .game img {
-  width: 70px;
-  height: 70px;
+  width: 62px;
+  height: 62px;
   max-width: 70px;
 }
