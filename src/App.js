@@ -5,10 +5,12 @@ const candyColors = ["blue", "green", "orange", "red", "purple", "yellow"];
 
 const App = () => {
   const [currentColorArrangement, setCurrentColorArrangement] = useState([]);
+  const [candyBeingDragged, setCandyBeingDragged] = useState(null)
+  const [candyBeingReplaced, setCandyBeingReplaced] = useState(null)
 
 
   const checkForColumnOfFour = () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 0; i <= 39; i++) {
       const columnOfFoure = [i, i + width, i + width * 2, i + width * 3];
       const decidedColor = currentColorArrangement[i];
 
@@ -18,13 +20,14 @@ const App = () => {
         )
       ) {
         columnOfFoure.forEach((candy) => (currentColorArrangement[candy] = ""));
+        return true
       }
     }
   };
 
 
   const checkForColumnOfThree = () => {
-    for (let i = 0; i < 47; i++) {
+    for (let i = 0; i <= 47; i++) {
       const columnOfThree = [i, i + width, i + width * 2];
       const decidedColor = currentColorArrangement[i];
 
@@ -34,6 +37,7 @@ const App = () => {
         )
       ) {
         columnOfThree.forEach((candy) => (currentColorArrangement[candy] = ""));
+        return true
       }
     }
   };
@@ -53,6 +57,7 @@ const App = () => {
         )
       ) {
         RowOfFour.forEach((candy) => (currentColorArrangement[candy] = ""));
+        return true
       }
     }
   };
@@ -70,13 +75,14 @@ const App = () => {
         )
       ) {
         RowOfThree.forEach((candy) => (currentColorArrangement[candy] = ""));
+        return true
       }
     }
   };
 
 
   const moveIntoSquareBelow = () => {
-    for (let i = 0; i < 64 - width; i++ ) {
+    for (let i = 0; i <= 55; i++ ) {
       const firstRow = [0,1,2,3,4,5,6,7]
       const isFirstRow = firstRow.includes(i)
 
@@ -90,6 +96,49 @@ const App = () => {
         currentColorArrangement[i] = ''
       }
     }
+  }
+
+
+  const dragStart = (e) => {
+    setCandyBeingDragged(e.target)
+  } 
+
+  const dragDrop = (e) => {
+    setCandyBeingReplaced(e.target)
+  }
+
+  const dragEnd = (e) => {
+    const candyBeingDraggedId = parseInt(candyBeingDragged.getAttribute('data-id'))
+    const candyBeingReplacedId = parseInt(candyBeingReplaced.getAttribute('data-id'))
+
+    currentColorArrangement[candyBeingReplacedId] = candyBeingDragged.style.backgroundColor
+    currentColorArrangement[candyBeingDraggedId] = candyBeingReplaced.style.backgroundColor
+
+    const validMoves = [
+      candyBeingDraggedId -1,
+      candyBeingDraggedId - width,
+      candyBeingDraggedId + 1, 
+      candyBeingDraggedId + width
+    ]
+
+    const validMove = validMoves.includes(candyBeingReplacedId)
+
+    const isColumnOfFour = checkForColumnOfFour()
+    const isColumnOfThree = checkForColumnOfThree()
+    const isRowOfFour = checkForRowOfFour()
+    const isRowOfThree = checkForRowOfThree()
+
+    if(candyBeingReplacedId && validMove && 
+      (isColumnOfFour || isColumnOfThree || isRowOfFour || isRowOfThree )) {
+        setCandyBeingDragged(null)
+        setCandyBeingReplaced(null)
+      } else {
+        currentColorArrangement[candyBeingReplacedId] = candyBeingReplaced.style.backgroundColor
+        currentColorArrangement[candyBeingDraggedId] = candyBeingDragged.style.backgroundColor
+        setCurrentColorArrangement([...currentColorArrangement])
+      }
+
+
   }
 
 
@@ -115,11 +164,10 @@ const App = () => {
       checkForRowOfThree()
       moveIntoSquareBelow()
       setCurrentColorArrangement([...currentColorArrangement])
-    }, 1000)
+    }, 100)
     return () => clearInterval(timer);
   }, [ checkForColumnOfFour, checkForRowOfFour, checkForRowOfThree ,checkForColumnOfThree , moveIntoSquareBelow ,currentColorArrangement,])
 
-  console.log(currentColorArrangement);
 
 
 
@@ -132,6 +180,14 @@ const App = () => {
             key={index}
             style={{ backgroundColor: candyColors }}
             alt={candyColors}
+            data-id={index}
+            draggable={true}
+            onDragStart={dragStart}
+            onDragOver={(e) => e.preventDefault()}
+            onDragEnter={(e) => e.preventDefault()}
+            onDragLeave={(e) => e.preventDefault()}
+            onDrop={dragDrop}
+            onDragEnd={dragEnd}
           />
         ))}
       </div>
