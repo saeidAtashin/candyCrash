@@ -25,17 +25,16 @@ app.get('/scores' , (req, res) => {
             'X-Cassandra-Token': process.env.ASTRA_TOKEN
         }
     }
-    axios(`${url}?page-size=20`, options)
+    axios(`${url}?page-size=10`, options)
     .then(response => res.status(200).json(response.data))
     .catch(err => res.status(500).json({message: err}))
 })
 
 app.post('/addscore', (req, res) => {
+    const bodyContent = req.body
 
-    const testData= {
-        username: 'bob',
-        score: 3
-    }
+
+
 
     const options = {
         method: "POST",
@@ -44,7 +43,7 @@ app.post('/addscore', (req, res) => {
             'X-Cassandra-Token': process.env.ASTRA_TOKEN,
             'Content-Type': 'application/json'
         },
-        data: testData
+        data: bodyContent
     }
     axios(url, options)
     .then(response => res.status(200).json(response.data))
