@@ -25,6 +25,27 @@ const App = () => {
   const [candyBeingReplaced, setCandyBeingReplaced] = useState(null);
   const [scoreDisplay, setScoreDisplay] = useState(0);
 
+
+  const checkForColumnOfFive = () => {
+    for (let i = 0; i <= 31; i++) {
+      const columnOfFive = [i, i + width, i + width * 2, i + width * 3 , i + width * 4];
+      const decidedColor = currentColorArrangement[i];
+      const isBlank = currentColorArrangement[i] === blank;
+      if (
+        columnOfFive.every(
+          (candy) => currentColorArrangement[candy] === decidedColor && !isBlank
+        )
+      ) {
+        setScoreDisplay((score) => score + 5);
+
+        columnOfFive.forEach(
+          (candy) => (currentColorArrangement[candy] = blank)
+        );
+        return true;
+      }
+    }
+  };
+
   const checkForColumnOfFour = () => {
     for (let i = 0; i <= 39; i++) {
       const columnOfFoure = [i, i + width, i + width * 2, i + width * 3];
@@ -60,6 +81,29 @@ const App = () => {
         columnOfThree.forEach(
           (candy) => (currentColorArrangement[candy] = blank)
         );
+        return true;
+      }
+    }
+  };
+
+  const checkForRowOfFive = () => {
+    for (let i = 0; i < 64; i++) {
+      const RowOfFive = [i, i + 1, i + 2, i + 3, i + 4];
+      const decidedColor = currentColorArrangement[i];
+      const isBlank = currentColorArrangement[i] === blank;
+      const notValid = [
+        4, 5, 6, 7, 12 ,13, 14, 15, 20 , 21, 22, 23,28,  29, 30, 31, 36, 37, 38, 39, 44, 45, 46, 47,52 , 53,
+        54, 55,61 , 62, 63, 64,
+      ];
+
+      if (notValid.includes(i)) continue;
+      if (
+        RowOfFive.every(
+          (candy) => currentColorArrangement[candy] === decidedColor && !isBlank
+        )
+      ) {
+        setScoreDisplay((score) => score + 5);
+        RowOfFive.forEach((candy) => (currentColorArrangement[candy] = blank));
         return true;
       }
     }
@@ -156,7 +200,8 @@ const App = () => {
     ];
 
     const validMove = validMoves.includes(candyBeingReplacedId);
-
+    const isColumnOfFive = checkForColumnOfFive()
+    const isRowOfFive= checkForRowOfFive();
     const isColumnOfFour = checkForColumnOfFour();
     const isColumnOfThree = checkForColumnOfThree();
     const isRowOfFour = checkForRowOfFour();
@@ -165,7 +210,7 @@ const App = () => {
     if (
       candyBeingReplacedId &&
       validMove &&
-      (isColumnOfFour || isColumnOfThree || isRowOfFour || isRowOfThree)
+      (isRowOfFive || isColumnOfFive || isColumnOfFour || isColumnOfThree || isRowOfFour || isRowOfThree)
     ) {
       setCandyBeingDragged(null);
       setCandyBeingReplaced(null);
@@ -194,6 +239,8 @@ const App = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
+      checkForColumnOfFive();
+      checkForRowOfFive();
       checkForColumnOfFour();
       checkForRowOfFour();
       checkForColumnOfThree();
@@ -203,6 +250,8 @@ const App = () => {
     }, 100);
     return () => clearInterval(timer);
   }, [
+    checkForColumnOfFive,
+    checkForRowOfFive,
     checkForColumnOfFour,
     checkForRowOfFour,
     checkForRowOfThree,
