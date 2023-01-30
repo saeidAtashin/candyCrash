@@ -1,9 +1,35 @@
-.app {
-  display: flex;
-  padding: 30px;
+body {
+  margin: 0;
+  padding: 0;
 }
 
+
+.app {
+  color: antiquewhite;  
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.first__h2 {
+  color: #f71ee8;
+  font-size: 40px;
+}
+
+.second__h2 {
+  color: hsla(304, 93%, 54%, 0.685);
+
+}
+.lastscores {
+  display: inline-block;
+}
+span {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(247, 30, 232);
+}
 .game {
+  margin-bottom: 80px;
+
   width: 560px;
   height: 560px;
   display: flex;

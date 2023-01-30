@@ -8,6 +8,7 @@ import purpleCandy from "./images/purple-candy.png";
 import yellowCandy from "./images/yellow-candy.png";
 import orangeCandy from "./images/orange-candy.png";
 import blank from "./images/blank.png";
+import bg from './images/slanted-gradient.svg'
 
 const width = 8;
 const candyColors = [
@@ -261,7 +262,15 @@ const App = () => {
   ]);
 
   return (
-    <div className="app">
+    <div
+    className="app"
+    style={{
+      backgroundImage : `url(${bg})`,
+      backgroundRepeat:"no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      height: "100vh"
+      }}>
       <div className="game">
         {currentColorArrangement.map((candyColors, index) => (
           <img
