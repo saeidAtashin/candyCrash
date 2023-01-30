@@ -29,17 +29,26 @@ span {
 }
 .game {
   margin-bottom: 80px;
-
+  min-width: 560px;
   width: 560px;
   height: 560px;
   display: flex;
   flex-wrap: wrap;
   gap: 2px 8px;
-  /* row-gap: 2px; */
 }
 
 .game img {
   width: 62px;
   height: 62px;
   max-width: 70px;
+}
+
+@media screen and (max-width: 1000px) {
+  .app {
+    padding-top: 50px;
+    color: rgb(255, 145, 2);  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
