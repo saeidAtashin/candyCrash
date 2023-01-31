@@ -8,7 +8,7 @@ import purpleCandy from "./images/purple-candy.png";
 import yellowCandy from "./images/yellow-candy.png";
 import orangeCandy from "./images/orange-candy.png";
 import blank from "./images/blank.png";
-import bg from './images/slanted-gradient.svg'
+import bg from "./images/slanted-gradient.svg";
 
 const width = 8;
 const candyColors = [
@@ -26,10 +26,15 @@ const App = () => {
   const [candyBeingReplaced, setCandyBeingReplaced] = useState(null);
   const [scoreDisplay, setScoreDisplay] = useState(0);
 
-
   const checkForColumnOfFive = () => {
     for (let i = 0; i <= 31; i++) {
-      const columnOfFive = [i, i + width, i + width * 2, i + width * 3 , i + width * 4];
+      const columnOfFive = [
+        i,
+        i + width,
+        i + width * 2,
+        i + width * 3,
+        i + width * 4,
+      ];
       const decidedColor = currentColorArrangement[i];
       const isBlank = currentColorArrangement[i] === blank;
       if (
@@ -93,8 +98,8 @@ const App = () => {
       const decidedColor = currentColorArrangement[i];
       const isBlank = currentColorArrangement[i] === blank;
       const notValid = [
-        4, 5, 6, 7, 12 ,13, 14, 15, 20 , 21, 22, 23,28,  29, 30, 31, 36, 37, 38, 39, 44, 45, 46, 47,52 , 53,
-        54, 55,61 , 62, 63, 64,
+        4, 5, 6, 7, 12, 13, 14, 15, 20, 21, 22, 23, 28, 29, 30, 31, 36, 37, 38,
+        39, 44, 45, 46, 47, 52, 53, 54, 55, 61, 62, 63, 64,
       ];
 
       if (notValid.includes(i)) continue;
@@ -201,8 +206,8 @@ const App = () => {
     ];
 
     const validMove = validMoves.includes(candyBeingReplacedId);
-    const isColumnOfFive = checkForColumnOfFive()
-    const isRowOfFive= checkForRowOfFive();
+    const isColumnOfFive = checkForColumnOfFive();
+    const isRowOfFive = checkForRowOfFive();
     const isColumnOfFour = checkForColumnOfFour();
     const isColumnOfThree = checkForColumnOfThree();
     const isRowOfFour = checkForRowOfFour();
@@ -211,7 +216,12 @@ const App = () => {
     if (
       candyBeingReplacedId &&
       validMove &&
-      (isRowOfFive || isColumnOfFive || isColumnOfFour || isColumnOfThree || isRowOfFour || isRowOfThree)
+      (isRowOfFive ||
+        isColumnOfFive ||
+        isColumnOfFour ||
+        isColumnOfThree ||
+        isRowOfFour ||
+        isRowOfThree)
     ) {
       setCandyBeingDragged(null);
       setCandyBeingReplaced(null);
@@ -263,14 +273,15 @@ const App = () => {
 
   return (
     <div
-    className="app"
-    style={{
-      backgroundImage : `url(${bg})`,
-      backgroundRepeat:"no-repeat",
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-      minHeight: "100vh"
-      }}>
+      className="app"
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        minHeight: "100vh",
+      }}
+    >
       <div className="game">
         {currentColorArrangement.map((candyColors, index) => (
           <img
@@ -289,6 +300,9 @@ const App = () => {
         ))}
       </div>
       <ScoreBoard score={scoreDisplay} />
+      <h1 className="mobile">
+        For best performance use it in<spam className="desk"> "larger display" </spam>
+      </h1>
     </div>
   );
 };

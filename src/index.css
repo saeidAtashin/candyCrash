@@ -42,13 +42,68 @@ span {
   height: 62px;
   max-width: 70px;
 }
+.app >h1 {
+  display: none;
+}
 
 @media screen and (max-width: 1000px) {
   .app {
-    padding-top: 50px;
     color: rgb(255, 145, 2);  
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex-direction: column-reverse;
   }
+
+  .game {
+    margin-bottom: 40px;
+    min-width: 280px;
+    width: 280px;
+    height: 280px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px 4px;
+  }
+  
+  .game img {
+    width: 30px;
+    height: 30px;
+    max-width: 35px;
+  }
+
+  .first__h2 {
+    color: #f71ee8;
+    font-size: 40px;
+    display: none;
+  }
+  
+  .second__h2 {
+    color: hsla(304, 93%, 54%, 0.685);
+    display: none;
+  
+  }
+  .lastscores {
+    display: none;
+    
+    /* display: inline-block; */
+  }
+  span {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(247, 30, 232);
+    display: none;
+  }
+  
+.app >h1 {
+  display: flex;
+
+}
+form {
+  display: none;
+}
+.desk{
+  padding-left: 8px;
+  font-variant: small-caps;
+  color: #f71ee8;
+}
 }
