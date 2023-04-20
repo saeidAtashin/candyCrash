@@ -301,7 +301,7 @@ const App = () => {
       </div>
       <ScoreBoard score={scoreDisplay} />
       <h1 className="mobile">
-        For best performance use it in<spam className="desk"> "larger display" </spam>
+        For best performance don't use it in<spam className="desk"> mobile </spam>
       </h1>
     </div>
   );

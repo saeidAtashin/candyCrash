@@ -53,7 +53,7 @@ const ScoreBoard = ({ score }) => {
         {userName} score: {score}
       </h2>
 
-      <h2 className="second__h2">High Scores: </h2>
+      {/* <h2 className="second__h2">High Scores: </h2> */}
       <form>
         <label style={{
           display:"flex",
